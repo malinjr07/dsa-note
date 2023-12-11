@@ -185,4 +185,3 @@ list.push('4th end');
 list.removeByIndex(5);
 list.removeByValue('3rd');
 list.print();
-
