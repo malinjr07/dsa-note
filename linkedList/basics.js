@@ -27,7 +27,31 @@ class LinkedList {
     return this.size;
   }
 
-  addAtStart(element) {
+  print() {
+    let current = this.head;
+    let list = ``;
+    while (current) {
+      list += `${current.value} -> `;
+      current = current.next;
+    }
+    console.log('head:', this.head.value, '| list: ', list);
+  }
+
+  searchIndex(element) {
+    let current = this.head;
+    let i = 0;
+    while (current) {
+      if (current.value === element) {
+        return i;
+      } else {
+        current = current.next;
+        i++;
+      }
+    }
+    return console.error('no node found');
+  }
+
+  unshift(element) {
     const newNode = new Node(element);
     if (this.isEmpty()) {
       this.head = newNode;
@@ -37,7 +61,30 @@ class LinkedList {
     }
     this.size++;
   }
-  addAtEnd(element) {
+
+  insert(value, index) {
+    if (0 > index || index > this.size) {
+      console.error('Invalid index!');
+      return null;
+    }
+    if (index === 0) {
+      this.unshift(value);
+    } else if (index === this.size) {
+      this.push(value);
+    } else {
+      const newNode = new Node(value);
+      let current = this.head;
+      for (let el = 0; el < index - 1; el++) {
+        current = current.next;
+      }
+
+      newNode.next = current.next;
+      current.next = newNode;
+      this.size++;
+    }
+  }
+
+  push(element) {
     const newNode = new Node(element);
     if (this.isEmpty()) {
       this.head = newNode;
@@ -50,91 +97,92 @@ class LinkedList {
     }
     this.size++;
   }
+
+  removeByIndex(index) {
+    let deletedNode;
+    if (index < 0 || index >= this.size) {
+      console.error('Invalid index!');
+      return null;
+    } else if (index === 0) {
+      deletedNode = this.head;
+      this.head = this.head.next;
+    } else {
+      let currentNode = this.head;
+      for (let i = 0; i < index - 1; i++) {
+        currentNode = currentNode.next;
+      }
+      deletedNode = currentNode.next;
+      currentNode.next = deletedNode.next;
+    }
+    this.size--;
+    return deletedNode;
+  }
+
+  removeByValue(value) {
+    let current = this.head;
+    let removedNode;
+    // If the value matched on the head of the node
+    if (current.value === value) {
+      removedNode = current.next;
+      current = current.next;
+      this.head = current.next;
+      this.size--;
+      // If the head of the Node has next value
+    } else if (current.next) {
+      for (let index = 0; index < this.size; index++) {
+        /**
+         * If we find match between params and next value of current node
+         * we will assign the next node of the next node of the current node to the next node of the current node
+         * that way, we are removing the next node of the current node from middle
+         */
+
+        if (current.next && current.next.value === value) {
+          removedNode = current.next;
+          current.next = current.next.next;
+          this.size--;
+          break;
+        } else {
+          /**
+           * Otherwise, we will traverse the node
+           */
+          current = current.next;
+        }
+      }
+      if (removedNode) {
+        return removedNode;
+      } else {
+        console.error('Invalid Value Passed!');
+        return null;
+      }
+    } else {
+      console.error('Invalid Value Passed!');
+    }
+  }
+
+  reverse() {
+    let current = this.head;
+    let previous = null;
+    while (current) {
+      let next = current.next;
+      current.next = previous;
+      previous = current;
+      current = next;
+    }
+    this.head = previous;
+  }
 }
 
 const list = new LinkedList();
 
-list.addAtStart('1st');
-list.addAtStart('2nd');
-list.addAtStart('3rd');
-list.addAtStart('last');
-list.addAtEnd('1st end');
-list.addAtEnd('2nd end');
-list.addAtEnd('3rd end');
-list.addAtEnd('4th end');
-
-let attributes = {
-  color: ['Red', 'Blue'],
-  sizes: ['Small', 'Medium', 'Large'],
-  material: ['Cotton', 'Wool'],
-  gender: ['Men', 'Women'],
-  type: ['Casual', 'Sport'],
-};
-
-let attrs = [];
-
-for (const [attr, values] of Object.entries(attributes))
-  attrs.push(values.map((v) => ({ [attr]: v })));
-
-attrs = attrs.reduce((a, b) =>
-  a.flatMap((d) => b.map((e) => ({ ...d, ...e })))
-);
-let productVariant = attrs.map((item) => {
-  let tempArr = Object.values(item);
-  return {
-    variantTitle: tempArr.join('/'),
-    variantPrice: parseInt(70 + tempArr.join('/').length + Math.random() * 10),
-    onHand: parseInt(1000 + tempArr.join('/').length + Math.random() * 10),
-    available: parseInt(575 + tempArr.join('/').length + Math.random() * 10),
-    sku: `13456789${parseInt(Math.random() * 10)}`,
-    ...item,
-  };
-});
-
-const productWithVariant = {
-  name: 'Main Product',
-  sku: '13456789',
-  price: '510',
-  variantLength: productVariant.length,
-  variants: productVariant,
-};
-console.log('productWithVariant:', productWithVariant);
-
-const getCurrentPrice = (rang, lambai, cheese, ling, dharan) => {
-  const matchedVariant = productWithVariant.variants.find(
-    (el) =>
-      el.color === rang &&
-      el.sizes === lambai &&
-      el.material === cheese &&
-      el.gender === ling &&
-      el.type === dharan
-  );
-  // console.log('matchedVariant:', matchedVariant);
-  return matchedVariant?.variantPrice;
-};
-
-const currentPrice =
-  getCurrentPrice('Red', 'Large', 'Wool', 'Men', 'Sport') ||
-  productWithVariant.price;
-// console.log('currentPrice:', currentPrice);
-
-const apiResponse = [productWithVariant];
-const finalArr = [];
-const allProducts = apiResponse.forEach((item) => {
-  const parentObj = JSON.parse(JSON.stringify(item));
-  delete parentObj.variants;
-  delete parentObj.variantLength;
-  finalArr.push(parentObj);
-  item.variants.forEach((el) => {
-    const variantObj = JSON.parse(JSON.stringify(parentObj));
-    variantObj.sku = el.sku;
-    variantObj.price = el.variantPrice;
-    variantObj.name = el.variantTitle;
-    finalArr.push(variantObj);
-  });
-
-  // console.log('allProducts ~ finalObj:', finalObj);
-});
-
-// console.log('finalArr.length', finalArr.length, 'finalArr:', finalArr);
+list.unshift('1st');
+list.unshift('2nd');
+list.unshift('3rd');
+list.unshift('last');
+list.push('1st end');
+list.push('2nd end');
+list.push('3rd end');
+list.push('4th end');
+list.removeByIndex(5);
+list.removeByValue('3rd');
+list.print();
 
