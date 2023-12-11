@@ -9,6 +9,7 @@
 
 class Node {
   constructor(value) {
+    this.previous = null;
     this.value = value;
     this.next = null;
   }
@@ -17,6 +18,7 @@ class Node {
 class LinkedList {
   constructor() {
     this.head = null;
+    this.tail = null;
     this.size = 0;
   }
 
@@ -28,13 +30,33 @@ class LinkedList {
   }
 
   print() {
-    let current = this.head;
-    let list = ``;
-    while (current) {
-      list += `${current.value} -> `;
-      current = current.next;
+    if (this.head) {
+      let current = this.head;
+      let list = ``;
+      while (current) {
+        list += `${current.value} -> `;
+        current = current.next;
+      }
+      console.log(
+        'size: ',
+        this.size,
+        '| head:',
+        this.head.value,
+        '| tail:',
+        this.tail.value,
+        '| list: ',
+        list
+      );
+    } else {
+      console.log(
+        'The LinkedList is Empty! Length:',
+        this.size,
+        '| head: ',
+        this.head,
+        '| tail: ',
+        this.tail
+      );
     }
-    console.log('head:', this.head.value, '| list: ', list);
   }
 
   searchIndex(element) {
@@ -55,9 +77,11 @@ class LinkedList {
     const newNode = new Node(element);
     if (this.isEmpty()) {
       this.head = newNode;
+      this.tail = newNode;
     } else {
-      newNode.next = this.head;
-      this.head = newNode;
+      newNode.next = this.head; // assigning current head to the next property of the new node.
+      this.head.previous = newNode; // assigning the new Node to the previous property of current head
+      this.head = newNode; // setting the new Node as new Head
     }
     this.size++;
   }
@@ -88,12 +112,11 @@ class LinkedList {
     const newNode = new Node(element);
     if (this.isEmpty()) {
       this.head = newNode;
+      this.tail = newNode;
     } else {
-      let prev = this.head;
-      while (prev.next) {
-        prev = prev.next;
-      }
-      prev.next = newNode;
+      newNode.previous = this.tail;
+      this.tail.next = newNode;
+      this.tail = newNode;
     }
     this.size++;
   }
@@ -173,15 +196,11 @@ class LinkedList {
 }
 
 const list = new LinkedList();
+list.print();
 
 list.unshift('1st');
 list.unshift('2nd');
 list.unshift('3rd');
-list.unshift('last');
-list.push('1st end');
-list.push('2nd end');
-list.push('3rd end');
-list.push('4th end');
-list.removeByIndex(5);
-list.removeByValue('3rd');
+// list.unshift('last');
 list.print();
+
