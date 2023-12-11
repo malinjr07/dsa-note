@@ -33,9 +33,15 @@ class LinkedList {
     if (this.head) {
       let current = this.head;
       let list = ``;
+      let index = 0;
       while (current) {
-        list += `${current.value} -> `;
+        list += `${index} : { previous: ${
+          current.previous && `${current.previous.value}`
+        }, value: ${current.value}, next: ${
+          current.next && `${current.next.value}`
+        } }, `;
         current = current.next;
+        index++;
       }
       console.log(
         'size: ',
@@ -87,13 +93,13 @@ class LinkedList {
   }
 
   insert(value, index) {
-    if (0 > index || index > this.size) {
+    if (0 > index) {
       console.error('Invalid index!');
       return null;
     }
     if (index === 0) {
       this.unshift(value);
-    } else if (index === this.size) {
+    } else if (index >= this.size) {
       this.push(value);
     } else {
       const newNode = new Node(value);
@@ -102,7 +108,18 @@ class LinkedList {
         current = current.next;
       }
 
+      /**
+       * Initially, we have got the previous node of the current index
+       * Now,
+       * we have to set that current node (Which is the previous node of our targeted index) as the previous node of the New Node
+       * Then, the next node of that current node will be assigned as next node of the new Node
+       * Then, the previous node of the next node of the current node will be assigned to the new node
+       * Finally, the next node of the current node will be the new node.
+       */
+
+      newNode.previous = current;
       newNode.next = current.next;
+      current.next.previous = newNode;
       current.next = newNode;
       this.size++;
     }
@@ -196,11 +213,13 @@ class LinkedList {
 }
 
 const list = new LinkedList();
-list.print();
 
-list.unshift('1st');
-list.unshift('2nd');
-list.unshift('3rd');
-// list.unshift('last');
+list.push('1st end');
+list.push('2nd end');
+list.push('3rd end');
+list.push('4th end');
+list.push('5th end');
+list.insert('5th position', 2);
+
 list.print();
 
