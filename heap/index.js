@@ -11,3 +11,31 @@
  * In Heap, We have Four Operations. I.E. Insert, Update, Extract (Delete and Read), and Build Heap (heapify)
  */
 
+class Heap {
+  constructor(array) {
+    if (array.length) {
+      this.heapify(array);
+    }
+  }
+
+  heapify(array) {
+    console.log('Heap ~ heapify ~ array:', array);
+  }
+
+  insert(item) {}
+
+  updateByValue(value) {}
+
+  updateByIndex(index, value) {}
+
+  extract(item) {}
+
+  /** Base Operations */
+
+  shiftUp() {}
+
+  shiftDown() {}
+}
+
+const heap = new Heap([525252, 2352, 56, 35, 63, 5, 85]);
+
