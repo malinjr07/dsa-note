@@ -185,3 +185,39 @@ list.push('4th end');
 list.removeByIndex(5);
 list.removeByValue('3rd');
 list.print();
+
+/* --- LinkedList Techniques --- */
+
+/**
+ * Lead-Lag Technique
+ * We will Have two pointers on two different node
+ * Both will have same speed (I.G. If we are jumping by one node, then both pointer will jump by one node)
+ * Type Of Problems that we can solve by the this technique are:
+ */
+
+/**
+ * Fast-Slow Technique / Floyd's Hare-Tortoise Algorithm
+ * Two Pointer will start from same node, but one will jump more nodes than other.
+ * I.G. Fast Pointer will jump Two nodes, while the slow Pointer jump one node at a time
+ * Type Of Problems that we can solve by the this technique are:
+ */
+
+/**
+ * LinkedList Reversal
+ * Reverse the LinkedList
+ * Type Of Problems that we can solve by the this technique are:
+ */
+
+function reverseLinkedList(list) {
+  let current = list.head;
+  let previous = null;
+  while (current) {
+    let next = current.next;
+    current.next = previous;
+    previous = current;
+    current = next;
+  }
+  list.head = previous;
+}
+
+/** Knapsack Algorithm */
