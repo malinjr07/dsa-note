@@ -146,6 +146,7 @@ class LinkedList {
     } else if (index === 0) {
       deletedNode = this.head;
       this.head = this.head.next;
+      this.head.next.previous = null;
     } else {
       let currentNode = this.head;
       for (let i = 0; i < index - 1; i++) {
@@ -178,7 +179,7 @@ class LinkedList {
 
         if (current.next && current.next.value === value) {
           removedNode = current.next;
-          current.next = current.next.next;
+          current.next = removedNode.next;
           this.size--;
           break;
         } else {
