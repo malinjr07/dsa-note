@@ -209,15 +209,17 @@ list.print();
  */
 
 function reverseLinkedList(list) {
-  let current = list.head;
-  let previous = null;
+  let current = list.head; // setting the initial current to the head node
+  let previous = null; // the previous is null, as the next node pointer of the last node is null
   while (current) {
-    let next = current.next;
-    current.next = previous;
-    previous = current;
-    current = next;
+    // checking if the current exist. Because, the last node has null as next pointer, so the final node will be false
+    let next = current.next; // take the next pointer of the current node as a temporary pointer for changing the current pointer to the next pointer once the reverse is completed
+    current.next = previous; // set the next pointer of the current node to the previous node (Reverse the current node backward)
+    previous = current; // set the current node as previous pointer for the next iteration. (So that we can keep adding the previous node as the next pointer of the upcoming nodes)
+    current = next; // set the next pointer as current node to keep the iteration going;
   }
-  list.head = previous;
+  list.head = previous; // when the loop ends, the final previous pointer will be the last node. Set that node as the head of the LinkedList
 }
 
 /** Knapsack Algorithm */
+

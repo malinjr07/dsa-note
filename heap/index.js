@@ -18,9 +18,7 @@ class Heap {
     }
   }
 
-  heapify(array) {
-    console.log('Heap ~ heapify ~ array:', array);
-  }
+  heapify(array) {}
 
   insert(item) {}
 
