@@ -168,7 +168,16 @@ class LinkedList {
    * Type Of Problems that we can solve by the this technique are:
    */
 
-  LeadLag() {}
+  leadLag() {
+    let lag = this.head;
+    let lead = lag.next.next; // Take any advanced node as lead pointer
+
+    while (lead !== null) {
+      console.log(`Lag: ${lag.value} | Lead: ${lead.value}`);
+      lag = lag.next; // The Traverse Speed will be same for both pointer
+      lead = lead.next; // The Traverse Speed will be same for both pointer
+    }
+  }
 
   /**
    * Fast-Slow Technique / Floyd's Hare-Tortoise Algorithm
@@ -177,7 +186,16 @@ class LinkedList {
    * Type Of Problems that we can solve by the this technique are:
    */
 
-  hareTortoise() {}
+  hareTortoise() {
+    let hare = this.head,
+      tortoise = this.head; // two pointer at same (head) node
+
+    while (hare && ![hare, hare.next].includes(null)) {
+      console.log(`Tortoise: ${tortoise.value} | Hare: ${hare.value}`);
+      tortoise = tortoise.next;
+      hare = hare.next.next;
+    }
+  }
 
   /**
    * LinkedList Reversal
@@ -214,4 +232,8 @@ list.push('4th end');
 list.removeByIndex(5);
 list.removeByValue('3rd');
 list.print();
+
+// list.leadLag();
+
+list.hareTortoise();
 
