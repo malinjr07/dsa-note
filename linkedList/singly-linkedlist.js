@@ -159,17 +159,46 @@ class LinkedList {
     }
   }
 
+  /* --- LinkedList Techniques --- */
+
+  /**
+   * Lead-Lag Technique
+   * We will Have two pointers on two different node
+   * Both will have same speed (I.G. If we are jumping by one node, then both pointer will jump by one node)
+   * Type Of Problems that we can solve by the this technique are:
+   */
+
+  LeadLag() {}
+
+  /**
+   * Fast-Slow Technique / Floyd's Hare-Tortoise Algorithm
+   * Two Pointer will start from same node, but one will jump more nodes than other.
+   * I.G. Fast Pointer will jump Two nodes, while the slow Pointer jump one node at a time
+   * Type Of Problems that we can solve by the this technique are:
+   */
+
+  hareTortoise() {}
+
+  /**
+   * LinkedList Reversal
+   * Reverse the LinkedList
+   * Type Of Problems that we can solve by the this technique are:
+   */
+
   reverse() {
-    let current = this.head;
-    let previous = null;
+    let current = this.head; // setting the initial current to the head node
+    let previous = null; // the previous is null, as the next node pointer of the last node is null. The Pointer we will be swapping to.
     while (current) {
-      let next = current.next;
-      current.next = previous;
-      previous = current;
-      current = next;
+      // checking if the current exist. Because, the last node has null as next pointer, so the final node will be false
+      let next = current.next; // take the next pointer of the current node as a temporary pointer for changing the current pointer to the next pointer once the reverse is completed
+      current.next = previous; // set the next pointer of the current node to the previous node (Reverse the current node backward)
+      previous = current; // set the current node as previous pointer for the next iteration. (So that we can keep adding the previous node as the next pointer of the upcoming nodes)
+      current = next; // set the next pointer as current node to keep the iteration going;
     }
-    this.head = previous;
+    this.head = previous; // when the loop ends, the final previous pointer will be the last node. Set that node as the head of the LinkedList
   }
+
+  /** Knapsack Algorithm */
 }
 
 const list = new LinkedList();
@@ -185,41 +214,4 @@ list.push('4th end');
 list.removeByIndex(5);
 list.removeByValue('3rd');
 list.print();
-
-/* --- LinkedList Techniques --- */
-
-/**
- * Lead-Lag Technique
- * We will Have two pointers on two different node
- * Both will have same speed (I.G. If we are jumping by one node, then both pointer will jump by one node)
- * Type Of Problems that we can solve by the this technique are:
- */
-
-/**
- * Fast-Slow Technique / Floyd's Hare-Tortoise Algorithm
- * Two Pointer will start from same node, but one will jump more nodes than other.
- * I.G. Fast Pointer will jump Two nodes, while the slow Pointer jump one node at a time
- * Type Of Problems that we can solve by the this technique are:
- */
-
-/**
- * LinkedList Reversal
- * Reverse the LinkedList
- * Type Of Problems that we can solve by the this technique are:
- */
-
-function reverseLinkedList(list) {
-  let current = list.head; // setting the initial current to the head node
-  let previous = null; // the previous is null, as the next node pointer of the last node is null
-  while (current) {
-    // checking if the current exist. Because, the last node has null as next pointer, so the final node will be false
-    let next = current.next; // take the next pointer of the current node as a temporary pointer for changing the current pointer to the next pointer once the reverse is completed
-    current.next = previous; // set the next pointer of the current node to the previous node (Reverse the current node backward)
-    previous = current; // set the current node as previous pointer for the next iteration. (So that we can keep adding the previous node as the next pointer of the upcoming nodes)
-    current = next; // set the next pointer as current node to keep the iteration going;
-  }
-  list.head = previous; // when the loop ends, the final previous pointer will be the last node. Set that node as the head of the LinkedList
-}
-
-/** Knapsack Algorithm */
 
