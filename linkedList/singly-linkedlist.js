@@ -215,8 +215,6 @@ class LinkedList {
     }
     this.head = previous; // when the loop ends, the final previous pointer will be the last node. Set that node as the head of the LinkedList
   }
-
-  /** Knapsack Algorithm */
 }
 
 const list = new LinkedList();
@@ -232,8 +230,6 @@ list.push('4th end');
 list.removeByIndex(5);
 list.removeByValue('3rd');
 list.print();
-
-// list.leadLag();
 
 list.hareTortoise();
 
