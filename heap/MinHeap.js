@@ -35,72 +35,59 @@ class Heap {
      * If we find this term broken, we will swap the parent with it's child
      */
     while (index != 0 && this.baseHeap[parent] > this.baseHeap[index]) {
+      /**
+       * Single Liner Approach
+       */
+
+      /* [this.baseHeap[index], this.baseHeap[parent]] = [
+        this.baseHeap[parent],
+        this.baseHeap[index],
+      ]; */
+
+      /**
+       * Broke for the learner
+       */
       const temp = this.baseHeap[parent];
       this.baseHeap[parent] = this.baseHeap[index];
       this.baseHeap[index] = temp;
+
+      // Changing the Index pointer to it's parent node
+
       index = parent;
     }
   }
 
   shiftDown(index) {
     let leftChild = index * 2 + 1;
-    let rightChild = index * 2 + 2;
-    if (
-      leftChild < this.baseHeap.length - 1 &&
-      rightChild < this.baseHeap.length - 1
+    let rightChild = index * 2 + 1;
+    while (
+      (leftChild < this.baseHeap.length &&
+        this.baseHeap[leftChild] < this.baseHeap[index]) ||
+      (rightChild < this.baseHeap.length &&
+        this.baseHeap[rightChild] < this.baseHeap[index])
     ) {
-      let smallestChild =
-        this.baseHeap[leftChild] > this.baseHeap[rightChild]
-          ? rightChild
-          : leftChild;
-
-      while (
-        smallestChild &&
-        this.baseHeap[smallestChild] > this.baseHeap[index]
+      let smallest;
+      if (
+        rightChild >= this.baseHeap.length ||
+        this.baseHeap[leftChild] < this.baseHeap[rightChild]
       ) {
-        const temp = this.baseHeap[smallestChild];
-        this.baseHeap[smallestChild] = this.baseHeap[index];
-        this.baseHeap[index] = temp;
-        index = smallestChild;
-        leftChild = index * 2 + 1;
-        rightChild = index * 2 + 2;
-        smallestChild =
-          this.baseHeap[leftChild] > this.baseHeap[rightChild]
-            ? rightChild
-            : leftChild;
+        smallest = leftChild;
+      } else {
+        smallest = rightChild;
       }
+      [this.baseHeap[index], this.baseHeap[smallest]] = [
+        this.baseHeap[smallest],
+        this.baseHeap[index],
+      ];
+      index = smallest;
+      leftChild = index * 2 + 1;
+      rightChild = index * 2 + 1;
     }
   }
 
   heapify() {
-    for (let i = Math.floor(this.baseHeap.length / 2); i >= 0; i--) {
-      const leftChildIndex = 2 * i + 1;
-      const rightChildIndex = 2 * i + 2;
-      let smallest = i;
-
-      // Find the smallest element among the node and its children
-      if (
-        leftChildIndex < this.baseHeap.length &&
-        this.baseHeap[leftChildIndex] < this.baseHeap[smallest]
-      ) {
-        smallest = leftChildIndex;
-      }
-
-      if (
-        rightChildIndex < this.baseHeap.length &&
-        this.baseHeap[rightChildIndex] < this.baseHeap[smallest]
-      ) {
-        smallest = rightChildIndex;
-      }
-
-      // If the smallest element is not the current node, swap and heapify again
-      if (smallest !== i) {
-        [this.baseHeap[i], this.baseHeap[smallest]] = [
-          this.baseHeap[smallest],
-          this.baseHeap[i],
-        ];
-        this.heapify(smallest);
-      }
+    for (let i = Math.floor(this.baseHeap.length / 2 - 1); i >= 0; i--) {
+      this.shiftDown(i);
     }
     console.log(`Array Heapified`, this.baseHeap);
   }
@@ -130,5 +117,5 @@ class Heap {
   }
 }
 
-const heap = new Heap([525252, 2352, 56, 35, 63, 5, 85]);
+const heap = new Heap([78, 2, 56, 35, 63, 65, 5]);
 // const heap = new Heap();
