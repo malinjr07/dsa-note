@@ -34,7 +34,7 @@ class Heap {
      * In Min Heap, the Parent will always be smaller than the Child node
      * If we find this term broken, we will swap the parent with it's child
      */
-    while (index != 0 && this.baseHeap[parent] > this.baseHeap[index]) {
+    while (index != 0 && this.baseHeap[index] < this.baseHeap[parent]) {
       /**
        * Single Liner Approach
        */
@@ -68,7 +68,7 @@ class Heap {
     ) {
       let smallest;
       if (
-        rightChild >= this.baseHeap.length ||
+        rightChild <= this.baseHeap.length ||
         this.baseHeap[leftChild] < this.baseHeap[rightChild]
       ) {
         smallest = leftChild;
@@ -117,5 +117,5 @@ class Heap {
   }
 }
 
-const heap = new Heap([78, 2, 56, 35, 63, 65, 5]);
+const heap = new Heap([5252, 298, 56, 35, 63, 65, 5, 85]);
 // const heap = new Heap();
