@@ -59,7 +59,7 @@ class Heap {
 
   shiftDown(index) {
     let leftChild = index * 2 + 1;
-    let rightChild = index * 2 + 1;
+    let rightChild = index * 2 + 2;
     while (
       (leftChild < this.baseHeap.length &&
         this.baseHeap[leftChild] < this.baseHeap[index]) ||
@@ -68,7 +68,7 @@ class Heap {
     ) {
       let smallest;
       if (
-        rightChild <= this.baseHeap.length ||
+        this.baseHeap.length <= rightChild ||
         this.baseHeap[leftChild] < this.baseHeap[rightChild]
       ) {
         smallest = leftChild;

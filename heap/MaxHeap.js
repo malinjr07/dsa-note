@@ -15,25 +15,23 @@
 class Heap {
   constructor(array) {
     if (array && array.length) {
-      this.init = array;
-      console.log(
-        `We have initiated the heap with default value: [${this.init}]`
-      );
+      this.baseHeap = array;
+      console.log(' Heap ~ constructor ~ this.baseHeap:', this.baseHeap);
+      this.heapify();
     } else {
-      this.init = [];
+      this.baseHeap = [];
       console.log(
-        `We have initiated the heap without any default value: [${this.init}]`
+        `We have initiated the heap without any default value: [${this.baseHeap}]`
       );
     }
   }
 
-  /** Base Operations */
-
-  shiftUp() {}
-
-  shiftDown() {}
-
-  heapify() {}
+  heapify() {
+    for (let i = Math.floor(this.baseHeap.length / 2 - 1); i >= 0; i--) {
+      this.shiftDown(i);
+    }
+    console.log(`Array Heapified`, this.baseHeap);
+  }
 
   insert(item) {}
 
@@ -42,8 +40,76 @@ class Heap {
   updateByIndex(index, value) {}
 
   extract() {}
+
+  /** Base Operations */
+
+  shiftUp(index) {
+    let parent = Math.floor((index - 1) / 2);
+
+    while (index != 0 && this.baseHeap[index] > this.baseHeap[parent]) {
+      /**
+       * Single Liner Approach
+       */
+
+      [this.baseHeap[index], this.baseHeap[parent]] = [
+        this.baseHeap[parent],
+        this.baseHeap[index],
+      ];
+
+      /**
+       * Broke down that single line for the learners
+       */
+      // const temp = this.baseHeap[parent];
+      // this.baseHeap[parent] = this.baseHeap[index];
+      // this.baseHeap[index] = temp;
+
+      // Changing the Index pointer to it's parent node for next iteration
+
+      index = parent;
+      parent = Math.floor((index - 1) / 2);
+    }
+  }
+
+  shiftDown(index) {
+    let leftChild = index * 2 + 1;
+    let rightChild = index * 2 + 2;
+
+    while (
+      (this.baseHeap.length > leftChild &&
+        this.baseHeap[leftChild] > this.baseHeap[index]) ||
+      (this.baseHeap.length > rightChild &&
+        this.baseHeap[rightChild] > this.baseHeap[index])
+    ) {
+      let largest;
+      if (
+        rightChild >= this.baseHeap.length ||
+        this.baseHeap[leftChild] > this.baseHeap[rightChild]
+      ) {
+        largest = leftChild;
+      } else {
+        largest = rightChild;
+      }
+      console.log(
+        'index value',
+        index,
+        this.baseHeap[index],
+        'largest value',
+        this.baseHeap[largest],
+        'Left Node value',
+        this.baseHeap[leftChild],
+        'Right Node value',
+        this.baseHeap[rightChild]
+      );
+      [this.baseHeap[index], this.baseHeap[largest]] = [
+        this.baseHeap[largest],
+        this.baseHeap[index],
+      ];
+      index = largest;
+      leftChild = index * 2 + 1;
+      rightChild = index * 2 + 1;
+    }
+  }
 }
 
 // const heap = new Heap([525252, 2352, 56, 35, 63, 5, 85]);
-const heap = new Heap();
-
+const heap = new Heap([5252, 298, 56, 90, 63, 65, 7785, 85]);
