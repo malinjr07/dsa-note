@@ -15,7 +15,7 @@
 class Heap {
   constructor(array) {
     if (array && array.length) {
-      this.baseHeap = array;
+      this.baseHeap = [...array];
       console.log(' Heap ~ constructor ~ this.baseHeap:', this.baseHeap);
       this.heapify();
     } else {
@@ -33,13 +33,42 @@ class Heap {
     console.log(`Array Heapified`, this.baseHeap);
   }
 
-  insert(item) {}
+  insert(item) {
+    if (this.baseHeap.length) {
+      this.baseHeap.push(item);
+      this.shiftUp(this.baseHeap.length - 1);
+    } else {
+      this.baseHeap.push(item);
+    }
+  }
 
-  updateByValue(value) {}
+  updateByValue(currentValue, newValue) {
+    const index = this.baseHeap.findIndex(currentValue);
+    this.baseHeap[index] = newValue;
+    if (currentValue > newValue) {
+      this.shiftDown(index);
+    } else {
+      this.shiftUp(index);
+    }
+  }
 
-  updateByIndex(index, value) {}
+  updateByIndex(index, newValue) {
+    const currentValue = this.baseHeap[index];
+    this.baseHeap[index] = newValue;
+    if (currentValue > newValue) {
+      this.shiftDown(index);
+    } else {
+      this.shiftUp(index);
+    }
+  }
 
-  extract() {}
+  extract() {
+    const extractValue = this.baseHeap[0];
+    [this.baseHeap[0], this.baseHeap.at(-1)]= [this.baseHeap.at(-1), this.baseHeap[0]];
+    this.baseHeap.pop();
+    this.shiftDown(this.baseHeap[0]);
+    return console.log(`Extracted Value: ${extractValue}  | New Heap ${this.baseHeap}`);
+  }
 
   /** Base Operations */
 
@@ -89,17 +118,6 @@ class Heap {
       } else {
         largest = rightChild;
       }
-      console.log(
-        'index value',
-        index,
-        this.baseHeap[index],
-        'largest value',
-        this.baseHeap[largest],
-        'Left Node value',
-        this.baseHeap[leftChild],
-        'Right Node value',
-        this.baseHeap[rightChild]
-      );
       [this.baseHeap[index], this.baseHeap[largest]] = [
         this.baseHeap[largest],
         this.baseHeap[index],

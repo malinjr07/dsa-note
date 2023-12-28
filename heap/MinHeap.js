@@ -15,7 +15,7 @@
 class Heap {
   constructor(array) {
     if (array && array.length) {
-      this.baseHeap = array;
+      this.baseHeap = [...array];
       console.log(' Heap ~ constructor ~ this.baseHeap:', this.baseHeap);
       this.heapify();
     } else {
@@ -29,7 +29,7 @@ class Heap {
   /** Base Operations */
 
   shiftUp(index) {
-    const parent = Math.floor((index - 1) / 2);
+    let parent = Math.floor((index - 1) / 2);
     /**
      * In Min Heap, the Parent will always be smaller than the Child node
      * If we find this term broken, we will swap the parent with it's child
@@ -51,9 +51,10 @@ class Heap {
       this.baseHeap[parent] = this.baseHeap[index];
       this.baseHeap[index] = temp;
 
-      // Changing the Index pointer to it's parent node
+      // Updating the Index pointer to it's parent node & updating the parent pointer based on the new index
 
       index = parent;
+      parent = Math.floor((index - 1) / 2);
     }
   }
 
@@ -61,10 +62,10 @@ class Heap {
     let leftChild = index * 2 + 1;
     let rightChild = index * 2 + 2;
     while (
-      (leftChild < this.baseHeap.length &&
-        this.baseHeap[leftChild] < this.baseHeap[index]) ||
       (rightChild < this.baseHeap.length &&
-        this.baseHeap[rightChild] < this.baseHeap[index])
+        this.baseHeap[rightChild] < this.baseHeap[index]) ||
+      (leftChild < this.baseHeap.length &&
+        this.baseHeap[leftChild] < this.baseHeap[index])
     ) {
       let smallest;
       if (
@@ -99,11 +100,36 @@ class Heap {
     } else {
       this.baseHeap.push(item);
     }
+    return console.log(`New Heap`, this.baseHeap);
   }
 
-  updateByValue(value) {}
+  updateByValue(previousValue, newValue) {
+    let index = this.baseHeap.findIndex(previousValue);
+    if (index === -1) {
+      return console.log('Invalid Value Provided!', previousValue);
+    }
+    this.baseHeap[index] = newValue;
+    if (newValue < previousValue) {
+      this.shiftUp(index);
+    } else {
+      this.shiftDown(index);
+    }
+    return console.log('Updated Heap', this.baseHeap);
+  }
 
-  updateByIndex(index, value) {}
+  updateByIndex(index, newValue) {
+    if (index <= 0 || index >= this.baseHeap.length) {
+      return console.log('Invalid Value Provided!', index);
+    }
+    const previousValue = this.baseHeap[index];
+    this.baseHeap[index] = newValue;
+    if (newValue < previousValue) {
+      this.shiftUp(index);
+    } else {
+      this.shiftDown(index);
+    }
+    return console.log('Updated Heap', this.baseHeap);
+  }
 
   extract() {
     let deleteItem = this.baseHeap[0];
@@ -113,9 +139,18 @@ class Heap {
     ];
     this.baseHeap.pop();
     this.shiftDown(0);
-    return console.log(`The Item Deleted Successfully! Item: ${deleteItem} `);
+    return console.log(
+      `The Item Deleted Successfully! Item: ${deleteItem}, new heap is: ${this.baseHeap} `
+    );
   }
 }
 
 const heap = new Heap([5252, 298, 56, 35, 63, 65, 5, 85]);
-// const heap = new Heap();
+
+// heap.extract();
+// heap.extract();
+// heap.insert(5);
+// heap.insert(25);
+// heap.insert(75);
+
+heap.updateByIndex(5, 25);
