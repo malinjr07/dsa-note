@@ -11,6 +11,10 @@ class BinaryTree {
     this.root = new Node(null);
   }
 
+  /**
+   * Insert with While loop
+   */
+
   insert(item) {
     const newNode = new Node(item);
     let currentNode = this.root;
@@ -27,15 +31,122 @@ class BinaryTree {
 
     if (parent.key === null) {
       this.root = newNode;
-      console.log('The Root Initiated when the item is', item);
     } else if (item < parent.key) {
       parent.left = newNode;
     } else {
       parent.right = newNode;
     }
   }
-  print() {
-    console.log('Root', this.root);
+
+  /**
+   * Insert with Recursion
+   */
+
+  push(item) {
+    const newNode = new Node(item);
+    if (!this.root.key || this.root.key === item) {
+      this.root = newNode;
+    } else {
+      this.insertByRecursion(this.root, newNode);
+    }
+  }
+
+  insertByRecursion(node, value) {
+    if (node.key > value.key) {
+      if (node.right === null) {
+        node.right = value;
+        return;
+      } else {
+        this.insertByRecursion(node.right, value);
+      }
+    } else {
+      if (node.left === null) {
+        node.left = value;
+        return;
+      } else {
+        this.insertByRecursion(node.left, value);
+      }
+    }
+  }
+
+  search(value) {
+    let currentNode = this.root;
+
+    while (currentNode.key !== null) {
+      if (currentNode.key === value) {
+        return console.log('Node Found!');
+      } else if (value > currentNode.key) {
+        currentNode = currentNode.right;
+      } else {
+        currentNode = currentNode.left;
+      }
+    }
+    return console.log('Invalid Value Passed!');
+  }
+
+  searchByRecursion(value) {
+    if (this.root.key === null) {
+      return false;
+    } else {
+      this.searchingRecursion(this.root, value);
+    }
+  }
+
+  searchingRecursion(currentNode, value) {
+    if (currentNode.key === value) {
+      return console.log('Node Found', currentNode);
+    } else if (value > currentNode.key) {
+      this.searchingRecursion(currentNode.right, value);
+    } else if (value < currentNode.key) {
+      this.searchingRecursion(currentNode.left, value);
+    } else {
+      return console.log('No Node was Found!');
+    }
+  }
+
+  preOrder(node = this.root) {
+    if (node.key) {
+      console.log(node.key);
+      this.preOrderRecursion(this.left);
+      this.preOrderRecursion(this.right);
+    }
+  }
+
+  inOrder(node = this.root) {
+    if (node.key) {
+      this.inOrder(node.left);
+      console.log(node.key);
+      this.inOrder(node.right);
+    }
+  }
+
+  postOrder(node = this.root) {
+    if (node.key) {
+      this.postOrder(node.left);
+      this.postOrder(node.right);
+      console.log(node.key);
+    }
+  }
+  /**
+   * Level Order Traversal
+   * Breadth First
+   */
+  levelOrder() {
+    const queue = [];
+
+    queue.push(this.root);
+    while (queue.length) {
+      let current = queue.shift();
+      console.log(current.key);
+
+      if (current.left) {
+        queue.push(current.left);
+      }
+
+      if (current.right) {
+        queue.push(current.right);
+      }
+    }
   }
 }
 
@@ -53,5 +164,3 @@ biTree.insert(55);
 biTree.insert(10);
 biTree.insert(20);
 biTree.insert(25);
-
-biTree.print();
