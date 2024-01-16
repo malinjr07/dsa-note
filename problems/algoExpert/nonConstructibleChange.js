@@ -5,9 +5,9 @@ function nonConstructibleChange(coins) {
 
   for (let coin of coins) {
     if (coin > currentCreatedChange + 1) {
-      return currentCreatedChange + 1;
+      return console.log(currentCreatedChange + 1);
     }
     currentCreatedChange += coin;
   }
-  return 1 + currentCreatedChange;
+  return console.log(currentCreatedChange + 1);
 }
