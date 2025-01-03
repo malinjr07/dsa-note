@@ -27,6 +27,7 @@ const mergeTwoPointer = (nums1, m, nums2, n) => {
       nums1[l--] = nums2[k--];
     }
   }
+
   while (j >= 0) {
     nums1[l--] = nums1[j--];
   }
@@ -37,7 +38,7 @@ const mergeTwoPointer = (nums1, m, nums2, n) => {
   return nums1;
 };
 
-console.log(mergeTwoPointer([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3));
+console.log(mergeTwoPointer([13, 28, 92, 0, 0, 0, 0, 0], 3, [10, 15, 33, 95, 99], 5));
 
 /**
  * #### Append then Sort | Time Complexity O(M+N * log(M+N)) Space Complexity: O(1) ####
@@ -55,3 +56,4 @@ const mergeSort = (nums1, m, nums2, n) => {
 };
 
 console.log(mergeSort([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3));
+
