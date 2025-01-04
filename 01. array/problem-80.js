@@ -12,6 +12,7 @@ const removeDuplicatesII = function (nums) {
     r = 0;
   while (r < nums.length) {
     let count = 1; // It's obvious that the current value is minimum 1 time
+    /* At the end of counting the streak, the right pointer will always be at the end of the streak */
     while (r + 1 < nums.length && nums[r] === nums[r + 1]) {
       count++;
       r++;
@@ -20,28 +21,27 @@ const removeDuplicatesII = function (nums) {
       nums[l] = nums[r];
       l++;
     }
+    /* As the right pointer will always be at the end of the streak, we will move the right pointer to the beginning of the next streak */
     r++;
   }
   nums.length = l;
   return nums;
 };
 
-console.log(removeDuplicatesII([1, 1, 1, 2, 2, 3]));
+console.log(removeDuplicatesII([1, 1, 1, 2, 2, 2, 3, 3]));
 
 const removeDuplicates = (nums) => {
-  let j = 0; // Initialize the pointer `j` to 0. This pointer will track the position in the array where the next valid element should be placed.
+  let k = 2;
 
-  for (let i = 0; i < nums.length; i++) {
-    // Loop through each element in the array using the pointer `i`.
-    if (nums[i] !== nums[i + 2]) {
-      // Check if the current element `nums[i]` is not equal to the element two positions ahead `nums[i + 2]`.
-      nums[j] = nums[i]; // If the condition is true, copy the current element `nums[i]` to the position `j` in the array.
-      j++; // Increment `j` to move to the next position for the next valid element.
+  for (let i = 2; i < nums.length; i++) {
+    if (nums[i] !== nums[k - 2]) {
+      nums[k] = nums[i];
+      k++;
     }
   }
-  nums.length = j;
-  return j; // Return the value of `j`, which represents the length of the array after removing duplicates.
+  nums.length = k;
+  return k, nums;
 };
 
-console.log(removeDuplicates([0, 1, 1, 1, 2, 2, 3]));
+console.log(removeDuplicates([0, 1, 1, 1, 2, 2, 2, 3, 3]));
 
