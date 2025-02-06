@@ -12,15 +12,14 @@ var rotateBruteForce = function (nums, k) {
   if (k === 0) return nums;
   const newArr = new Array(nums.length).fill(0);
   for (let key = 0; key < nums.length; key++) {
-    let targetedIndex;
-    targetedIndex = (key + k) % nums.length;
+    let targetedIndex = (key + k) % nums.length;
     newArr[targetedIndex] = nums[key];
   }
   nums = newArr;
   return nums;
 };
 
-console.log(rotateBruteForce([1, 2, 3, 4, 5, 6, 7], 3));
+// console.log(rotateBruteForce([1, 2, 3, 4, 5, 6, 7], 3));
 
 /**
  * ## Optimal Solution | Time: O(N) Space: O(1) ##
@@ -43,7 +42,7 @@ var rotateOptimal = function (nums, k) {
     }
   };
 
-  nums.reverse();
+  reverseArr(0, nums.length - 1);
   reverseArr(0, rotations - 1);
   reverseArr(rotations, nums.length - 1);
 
