@@ -15,10 +15,16 @@ Output:
  */
 
 function starTriangle(n = 0) {
-  for (let i = 1; i < n; i++) {
+  for (let i = 0; i < n; i++) {
     let row = '';
-    for (let j = 0; j < i; j++) {
+    for (let j = 1; j < n - i; j++) {
+      row += '\xa0';
+    }
+    for (let j = 0; j < 2 * i + 1; j++) {
       row += '*';
+    }
+    for (let j = 1; j < n - i; j++) {
+      row += '\xa0';
     }
     console.log(row);
   }
