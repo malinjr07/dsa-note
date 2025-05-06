@@ -6,14 +6,15 @@ Assume the environment does not allow you to store 64-bit integers (signed or un
 
 var reverse = function (n) {
   let reverseNum = 0;
-  while (n > 0) {
-    const lastDigit = n % 10;
+  let tempNum = n
+  while (tempNum > 0) {
+    const lastDigit = tempNum % 10;
     reverseNum = reverseNum * 10 + lastDigit;
-    n = Math.floor(n / 10);
+    tempNum = Math.floor(tempNum / 10);
   }
-  console.log(reverseNum);
+  console.log(reverseNum===n);
 };
 
-reverse(77985);
+reverse(121);
 // reverse(-120);
 
