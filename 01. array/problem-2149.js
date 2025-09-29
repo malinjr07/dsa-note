@@ -67,3 +67,68 @@ const rearrangeArray = (nums) => {
 
 console.log(rearrangeArray([3, 1, -2, -5, 2, -4]));
 
+const rearrangeArrayOptimal = (nums = []) => {
+  const n = nums.length;
+  const newArray = new Array(n);
+
+  let posIndex = 0;
+  let negIndex = 1;
+
+  for (let i = 0; i < n; i++) {
+    const currentElement = nums[i];
+
+    if (currentElement > 0) {
+      newArray[posIndex] = currentElement;
+      posIndex += 2;
+    } else {
+      newArray[negIndex] = currentElement;
+      negIndex += 2;
+    }
+  }
+
+  return newArray;
+};
+
+console.log(
+  rearrangeArrayOptimal([
+    28, -41, 22, -8, -37, 46, 35, -9, 18, -6, 19, -26, -37, -10, -9, 15, 14, 31,
+  ])
+);
+
+const rearrangeArrayBetterOptimal = (nums = []) => {
+  const n = nums.length;
+
+  const positives = [];
+  const negatives = [];
+
+  for (const num of nums) {
+    if (num > 0) {
+      positives.push(num);
+    } else {
+      negatives.push(num);
+    }
+  }
+
+  const newArray = new Array(n);
+  let positiveIndex = 0;
+  let negativeIndex = 0;
+
+  for (let i = 0; i < n; i++) {
+    if (i % 2 === 0) {
+      newArray[i] = positives[positiveIndex];
+      positiveIndex++;
+    } else {
+      newArray[i] = negatives[negativeIndex];
+      negativeIndex++;
+    }
+  }
+
+  return newArray;
+};
+
+console.log(
+  rearrangeArrayBetterOptimal([
+    28, -41, 22, -8, -37, 46, 35, -9, 18, -6, 19, -26, -37, -10, -9, 15, 14, 31,
+  ])
+);
+
