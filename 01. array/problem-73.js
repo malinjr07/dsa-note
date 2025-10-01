@@ -1,15 +1,18 @@
 var setZeroes = function (matrix = [[]]) {
   const zeroArr = [];
 
+  // Storing the Index that has 0 as value
   for (const key in matrix) {
     if (matrix[key].includes(0)) {
       matrix[key].forEach((element, index) => {
         if (element === 0) zeroArr.push(index);
       });
+      // If the current array has 0, we are replacing the whole array with a new array, filled with value 0
       matrix[key] = new Array(matrix[key].length).fill(0);
     }
   }
 
+  // Now, we iterate through the matrix and replace the index of 0 value of each array with 0
   for (const element of matrix) {
     zeroArr.forEach((zeros) => {
       element[zeros] = 0;
@@ -140,57 +143,6 @@ var setZeroes_O1_Space = function (matrix) {
 
 console.log(
   setZeroes_O1_Space([
-    [0, 1, 2, 0],
-    [3, 4, 5, 2],
-    [1, 3, 1, 5],
-  ])
-);
-
-/**
- * Solution 3: Optimized version of the original attempt.
- * Stores only UNIQUE column indices in a Set for O(1) lookups.
- * Time Complexity: O(M * N)
- * Space Complexity: O(N) (or O(min(M, N)) if using both row/col sets)
- *
- * @param {number[][]} matrix The m x n integer matrix to be modified in place.
- */
-var setZeroes_OptimizedSet = function (matrix) {
-  const M = matrix.length;
-  const N = matrix[0].length;
-  // Use a Set to store unique column indices to be zeroed.
-  const uniqueColIndices = new Set();
-  // We only need to store unique column indices, as we zero rows immediately.
-
-  // --- Pass 1: Identify unique zero columns & zero out rows immediately ---
-  for (let i = 0; i < M; i++) {
-    let rowHasZero = false;
-    // Check for zeros and populate the Set
-    for (let j = 0; j < N; j++) {
-      if (matrix[i][j] === 0) {
-        uniqueColIndices.add(j);
-        rowHasZero = true;
-      }
-    }
-    // Zero out the current row if a zero was found in it.
-    if (rowHasZero) {
-      matrix[i].fill(0);
-    }
-  }
-
-  // --- Pass 2: Zero out columns using the unique indices ---
-  for (let i = 0; i < M; i++) {
-    // Iterate over M rows
-    // Iterate over the limited number of unique columns (at most N)
-    for (const j of uniqueColIndices) {
-      matrix[i][j] = 0;
-    }
-  }
-
-  return matrix;
-};
-
-console.log(
-  setZeroes_OptimizedSet([
     [0, 1, 2, 0],
     [3, 4, 5, 2],
     [1, 3, 1, 5],
