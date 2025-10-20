@@ -1,21 +1,21 @@
 const Optimal = (nums = [], k = 0) => {
-  const hashMap = new Map();
-  let sum = 0,
-    count = 0;
+  let map = new Map();
+  let sum = 0;
+  let count = 0;
+  map.set(0, 1);
   for (let i = 0; i < nums.length; i++) {
-    const element = nums[i];
-    sum += element;
-    if (sum === k) {
-      count++;
-    }
-    const remain = sum - k;
+    sum += nums[i];
+    console.log(i, sum, sum - k);
 
-    if (hashMap.get(remain)) {
-      count++;
+    if (map.has(sum - k)) {
+      count += map.get(sum - k);
     }
-    hashMap.set(sum, i);
+    if (map.has(sum)) {
+      map.set(sum, map.get(sum) + 1);
+    } else {
+      map.set(sum, 1);
+    }
   }
-
   return count;
 };
 
