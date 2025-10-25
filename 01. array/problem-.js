@@ -1,8 +1,8 @@
-const bruteForce = () => {};
+const bruteForce = (nums = []) => {};
 
 console.log(bruteForce());
 
-const optimalSolution = () => {};
+const optimalSolution = (nums = []) => {};
 
 console.log(optimalSolution());
 

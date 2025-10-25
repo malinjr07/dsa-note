@@ -27,7 +27,7 @@ const optimalSolution = (nums = []) => {
   };
 
   const counter = (start, mid, end) => {
-    let count = 0;
+    let pairs = 0;
     const temp = [];
     let i = start;
     let j = mid + 1;
@@ -36,7 +36,7 @@ const optimalSolution = (nums = []) => {
       if (nums[i] <= 2 * nums[j]) {
         i++;
       } else {
-        count += mid - i + 1;
+        pairs += mid - i + 1;
         j++;
       }
     }
@@ -68,7 +68,7 @@ const optimalSolution = (nums = []) => {
       nums[start + k] = temp[k];
     }
 
-    return count;
+    return pairs;
   };
 
   mergeSort(0, nums.length - 1);
