@@ -7,8 +7,7 @@ const optimalSolution = (s = '') => {
   for (const char of s) {
     counter.set(char, (counter.get(char) || 0) + 1);
   }
-  const pq = Array.from(counter.entries());
-  pq.sort((a, b) => b[1] - a[1]);
+  const pq = Array.from(counter.entries()).sort((a, b) => b[1] - a[1]);
   let str = '';
   for (const [char, freq] of pq) {
     str += char.repeat(freq);

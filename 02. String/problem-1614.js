@@ -1,7 +1,3 @@
-const bruteForce = (s = '') => {};
-
-console.log(bruteForce());
-
 const optimalSolution = (s = '') => {
   let counter = 0,
     maxNest = 0;
