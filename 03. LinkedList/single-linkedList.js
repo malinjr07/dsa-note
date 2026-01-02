@@ -21,9 +21,7 @@ class LinkedList {
 
   prepend(val) {
     const node = new Node(val);
-    if (!this.isEmpty()) {
-      node.next = this.head;
-    }
+    node.next = this.head;
     this.head = node;
     this.size++;
   }
@@ -134,6 +132,17 @@ class LinkedList {
     }
     return 'No Node found with given input';
   }
+  reverse() {
+    let current = this.head;
+    let prev = null;
+    while (current) {
+      const next = current.next;
+      current.next = prev;
+      prev = current;
+      current = next;
+    }
+    this.head = prev;
+  }
 }
 
 const list = new LinkedList();
@@ -159,5 +168,6 @@ console.log(list.print());
 
 console.log(list.removeByValue(5));
 console.log(list.print());
-console.log(list.search(6));
+list.reverse();
+console.log(list.print());
 
